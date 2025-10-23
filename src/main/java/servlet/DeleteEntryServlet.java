@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import logic.EntryLogic;
+import logic.EntryDeleteLogic;
 
 /**
  * Servlet implementation class DeleteEntryServlet
@@ -30,23 +30,28 @@ public class DeleteEntryServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idStr = request.getParameter("entryId");
-        if (idStr != null) {
+
+        if (idStr != null && !idStr.isEmpty()) {
             try {
                 int entryId = Integer.parseInt(idStr);
-                EntryLogic logic = new EntryLogic();
+                EntryDeleteLogic logic = new EntryDeleteLogic();
                 boolean success = logic.execute(entryId);
 
                 if (success) {
-                    response.sendRedirect("EntrySearchServlet");
+                    request.getSession().setAttribute("message", "削除しました");
                 } else {
-                    response.getWriter().write("削除できませんでした");
+                    request.getSession().setAttribute("message", "削除に失敗しました");
                 }
+
             } catch (NumberFormatException e) {
-                response.getWriter().write("不正なIDです");
+                request.getSession().setAttribute("message", "不正なIDです");
             }
         } else {
-            response.getWriter().write("IDが指定されていません");
+            request.getSession().setAttribute("message", "IDを入力してください");
         }
+
+        // 削除後は検索画面(entryDelete.jsp)を表示するサーブレットへ戻す
+        response.sendRedirect("EntrySearchServlet");
     }
 
 	/**

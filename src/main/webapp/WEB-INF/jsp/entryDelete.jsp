@@ -19,8 +19,14 @@ function confirmDelete() {
 
 <h1>削除データ確認</h1>
 
+<!-- ✅ 削除成功・失敗メッセージを表示 -->
+<c:if test="${not empty sessionScope.message}">
+    <p style="color: green; font-weight: bold;">${sessionScope.message}</p>
+    <!-- 一度表示したらメッセージを削除 -->
+    <c:remove var="message" scope="session" />
+</c:if>
 
-<!-- ここにエラーメッセージを追記 -->
+<!-- ここにエラーメッセージを表示 -->
 <c:if test="${not empty errorMsg}">
     <p style="color:red">${errorMsg}</p>
 </c:if>
@@ -52,14 +58,18 @@ function confirmDelete() {
                 <td>${entry.date}</td>
                 <td>${entry.name}</td>
                 <td>${entry.categoryId}</td>
-                <td><c:choose>
+                <td>
+                    <c:choose>
                         <c:when test="${entry.creditFlag}">クレジット</c:when>
                         <c:otherwise>現金</c:otherwise>
-                    </c:choose></td>
-                <td><c:choose>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:choose>
                         <c:when test="${entry.purposeFlag}">生活費</c:when>
                         <c:otherwise>お小遣い</c:otherwise>
-                    </c:choose></td>
+                    </c:choose>
+                </td>
                 <td>${entry.price}</td>
             </tr>
         </tbody>

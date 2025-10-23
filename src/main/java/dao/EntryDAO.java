@@ -34,14 +34,14 @@ public class EntryDAO {
     
     public boolean deleteById(int entryId) {
         String sql = "DELETE FROM entries WHERE entries_id = ?";
-        
+
         try (Connection conn = DBManager.getConnection();
              PreparedStatement pStmt = conn.prepareStatement(sql)) {
 
             pStmt.setInt(1, entryId);
             int result = pStmt.executeUpdate();
-            return result > 0; // 1件以上削除できたら true
-            
+            return result > 0;  // 削除成功ならtrue
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
