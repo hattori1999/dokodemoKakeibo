@@ -22,7 +22,7 @@
 			<li><a href="EntryServlet">記帳する</a></li>
 			<li><a href="EntryListServlet">削除する</a></li>
 			<li><a href="SummaryServlet">集計する</a></li>
-			<li><a href>お小遣い設定画面</a></li>
+			<li><a href="${pageContext.request.contextPath}/allowance">お小遣い設定</a></li>
 			<li><a href>分類の編集</a></li>
 		</ul>
 	</div>
